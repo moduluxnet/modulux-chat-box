@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wpml-config>
+  <custom-types>
+    <custom-type translate="1">mlx_chat_qa</custom-type>
+  </custom-types>
+
+  <admin-texts>
+    <key name="mlx_chat_box_options">
+      <key name="header_title" />
+      <key name="search_placeholder" />
+      <key name="offline_message" />
+      <key name="contact_label" />
+      <key name="product_template" />
+    </key>
+  </admin-texts>
+</wpml-config>

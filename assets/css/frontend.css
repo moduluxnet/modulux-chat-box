@@ -1,0 +1,210 @@
+#mlx-chat-box-root.mlx-chat-box {
+  position: fixed;
+  z-index: 999999;
+  font-family: inherit;
+
+  --mlx-primary: #25d366;
+  --mlx-text: #111;
+  --mlx-panel-bg: #fff;
+
+  z-index: 999999; /* ensure root is above overlay */
+
+  /* Launcher style vars */
+  --mlx-launcher-size-width: 56px;
+  --mlx-launcher-size-height: 56px;
+  --mlx-launcher-bg: var(--mlx-primary);
+  --mlx-launcher-fg: #fff;
+  --mlx-launcher-bw: 0px;
+  --mlx-launcher-bc: var(--mlx-primary);
+  --mlx-launcher-br: 999px;
+}
+
+button.mlx-chat-launcher,
+button.mlx-chat-launcher:hover,
+button.mlx-chat-launcher:focus {
+  width: var(--mlx-launcher-size-width);
+  height: var(--mlx-launcher-size-height);
+  border-radius: var(--mlx-launcher-br);
+  border-style: solid;
+  border-width: var(--mlx-launcher-bw);
+  border-color: var(--mlx-launcher-bc);
+
+  cursor: pointer;
+  background: var(--mlx-launcher-bg);
+  color: var(--mlx-launcher-fg);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+
+  transition: all 0.2s ease;
+}
+
+button.mlx-chat-launcher:hover,
+button.mlx-chat-launcher:focus {
+  opacity: 0.75;
+  transform: scale(1.05);
+}
+
+.mlx-chat-launcher .dashicons {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.mlx-chat-launcher-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.mlx-chat-panel {
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  margin-top: 10px;
+  border-radius: 14px;
+  background: var(--mlx-panel-bg);
+  color: var(--mlx-text);
+  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  /*height: 400px;*/
+
+  transition: all 0.3s ease;
+}
+
+.mlx-chat-header {
+  padding: 12px 14px;
+  background: rgba(0,0,0,.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mlx-chat-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+button.mlx-chat-close {
+  width: clamp(28px, calc(var(--mlx-launcher-size-width) / 1.8), 48px);
+  height: clamp(28px, calc(var(--mlx-launcher-size-height) / 1.8), 48px);
+  padding: 0;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--mlx-text);
+}
+
+button.mlx-chat-close:hover,
+button.mlx-chat-close:focus {
+  color: var(--mlx-panel-bg);
+  background: var(--mlx-primary);
+}
+
+.mlx-chat-body {
+  padding: 12px 14px;
+}
+
+input[type=search].mlx-chat-search {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  outline: none;
+}
+
+.mlx-chat-list {
+  margin-top: 10px;
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.mlx-chat-item {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+button.mlx-chat-q,
+button.mlx-chat-q:hover,
+button.mlx-chat-q:focus {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--mlx-text);  
+}
+
+.mlx-chat-a {
+  padding: 0 12px 12px 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.mlx-chat-offline {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 170, 0, 0.12);
+  border: 1px solid rgba(255, 170, 0, 0.25);
+  font-size: 13px;
+}
+
+.mlx-chat-footer {
+  margin-top: auto;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.mlx-chat-contact {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: var(--mlx-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.mlx-chat-contact.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Overlay styles */
+.mlx-chat-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: -1; /* will be overridden by root stacking */
+}
+
+/* Put overlay behind panel but above page */
+#mlx-chat-box-root .mlx-chat-overlay {
+  z-index: 0;
+}
+
+/* Put launcher + panel above overlay */
+#mlx-chat-box-root .mlx-chat-launcher,
+#mlx-chat-box-root .mlx-chat-panel {
+  position: relative;
+  z-index: 1;
+}

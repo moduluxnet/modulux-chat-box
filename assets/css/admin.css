@@ -1,0 +1,36 @@
+.mlx-media {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.mlx-media-preview img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  padding: 4px;
+}
+
+.mlx-use-hours-label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.mlx-hours th, .mlx-hours td {
+  padding: 8px;
+  text-align: left;
+}
+
+.mlx-hours input[type="time"]{
+  width: 120px;
+}
+
+.mlx-contact-whatsapp, .mlx-contact-custom,
+.mlx-launcher-dashicon, .mlx-launcher-image {
+  margin-top: 8px;
+}
