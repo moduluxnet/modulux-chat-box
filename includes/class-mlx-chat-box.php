@@ -1,4 +1,9 @@
 <?php
+/* 
+ * Main class
+ * @since 1.0.0
+ * @package Modulux_Chat_Box
+*/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 final class MLX_Chat_Box {
@@ -8,6 +13,7 @@ final class MLX_Chat_Box {
 	/** Option key */
 	const OPTION_KEY = 'mlx_chat_box_options';
 
+	/* Singleton instance */
 	public static function instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -18,6 +24,7 @@ final class MLX_Chat_Box {
 
 	private function __construct() {}
 
+	/* Initialize */
 	public function init() {
 		//require_once MLX_CHAT_BOX_DIR . 'includes/class-mlx-chat-box-i18n.php';
 		require_once MLX_CHAT_BOX_DIR . 'includes/class-mlx-chat-box-cpt.php';
@@ -34,6 +41,7 @@ final class MLX_Chat_Box {
 		}
 	}
 
+	/* Activation hook */
 	public static function activate() {
 		$defaults = self::default_options();
 
@@ -51,9 +59,14 @@ final class MLX_Chat_Box {
 		flush_rewrite_rules();
 	}
 
+	/* Default options */
 	public static function default_options() {
 		return array(
 			'enabled'            => 1,
+
+			// Display rules
+			'show_post_types' => array(), // empty = all
+			'show_pages'      => array(), // empty = all			
 
 			// Launcher/button
 			'launcher_icon_type' => 'dashicon', // dashicon|image
@@ -114,6 +127,7 @@ final class MLX_Chat_Box {
 		);
 	}
 
+	/* Get saved options merged with defaults */
 	public static function get_options() {
 		$defaults = self::default_options();
 		$opts     = get_option( self::OPTION_KEY, array() );

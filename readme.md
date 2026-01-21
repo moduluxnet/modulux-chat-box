@@ -24,6 +24,8 @@ Visitors are encouraged to read your predefined Q&As before messaging you.
 
 ## Key Features
 
+- Control visibility by post type
+- Optionally limit display to specific pages
 - Floating launcher button with full styling control
 - Custom post type for Questions & Answers
 - Searchable Q&A list

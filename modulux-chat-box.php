@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Modulux Chat Box
- * Plugin URI: https://modulux.net
+ * Plugin URI: https://modulux.net/modulux-chat-box/
  * Description: Floating Q&A chat box with optional WhatsApp (or custom) contact link. Supports multilingual setups (Polylang/WPML) via standard WordPress i18n and translatable CPT content.
  * Version: 1.0.0
  * Author: Modulux

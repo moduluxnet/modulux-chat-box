@@ -1,14 +1,25 @@
 <?php
+/* 
+ * Frontend class
+ * @since 1.0.0
+ * @package Modulux_Chat_Box
+*/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 final class MLX_Chat_Box_Frontend {
 
+	/* Initialize */
 	public static function init() {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 		add_action( 'wp_footer', array( __CLASS__, 'render' ) );
 	}
 
+	/* Enqueue assets and localize script */
 	public static function enqueue() {
+		if ( ! self::should_render() ) {
+			return;
+		}
+
 		$opts = MLX_Chat_Box::get_options();
 		if ( empty( $opts['enabled'] ) ) {
 			return;
@@ -67,6 +78,7 @@ final class MLX_Chat_Box_Frontend {
 		wp_localize_script( 'mlx-chat-box-frontend', 'MLXChatBox', $data );
 	}
 
+	/* Get list of Q&As */
 	private static function get_qas() {
 		$args = array(
 			'post_type'      => MLX_Chat_Box_CPT::CPT,
@@ -99,6 +111,42 @@ final class MLX_Chat_Box_Frontend {
 		return $list;
 	}
 
+	/* Determine if chat box should be rendered on this page */
+	private static function should_render() {
+		$opts = MLX_Chat_Box::get_options();
+
+		if ( empty( $opts['enabled'] ) ) {
+			return false;
+		}
+
+		// Only on frontend
+		if ( is_admin() ) {
+			return false;
+		}
+
+		// If specific pages selected, only show on those.
+		if ( ! empty( $opts['show_pages'] ) && is_array( $opts['show_pages'] ) ) {
+			if ( is_page() ) {
+				$current_id = get_queried_object_id();
+				return in_array( (int) $current_id, array_map( 'absint', $opts['show_pages'] ), true );
+			}
+			return false; // not a page, and pages list is restricted
+		}
+
+		// If specific post types selected, only show on those.
+		if ( ! empty( $opts['show_post_types'] ) && is_array( $opts['show_post_types'] ) ) {
+			if ( is_singular() ) {
+				$pt = get_post_type( get_queried_object_id() );
+				return $pt && in_array( $pt, array_map( 'sanitize_key', $opts['show_post_types'] ), true );
+			}
+			return false; // not singular, and post types list is restricted
+		}
+
+		// Default: show everywhere.
+		return true;
+	}
+
+	/* Determine if currently online based on hours settings */
 	private static function is_online_now() {
 		$opts = MLX_Chat_Box::get_options();
 		if ( empty( $opts['use_hours'] ) ) {
@@ -129,6 +177,7 @@ final class MLX_Chat_Box_Frontend {
 		return ( $now >= $start_dt && $now <= $end_dt );
 	}
 
+	/* Get contact URL based on settings */
 	private static function get_contact_url() {
 		$opts = MLX_Chat_Box::get_options();
 
@@ -145,6 +194,7 @@ final class MLX_Chat_Box_Frontend {
 		return 'https://wa.me/' . $number;
 	}
 
+	/* Get product message if on a WooCommerce product page */
 	private static function get_product_message_if_any() {
 		if ( ! function_exists( 'is_product' ) || ! is_product() ) {
 			return '';
@@ -176,7 +226,12 @@ final class MLX_Chat_Box_Frontend {
 		return $msg;
 	}
 
+	/* Render chat box root element */
 	public static function render() {
+		if ( ! self::should_render() ) {
+			return;
+		}
+
 		$opts = MLX_Chat_Box::get_options();
 		if ( empty( $opts['enabled'] ) ) {
 			return;

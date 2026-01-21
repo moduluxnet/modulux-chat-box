@@ -1,13 +1,9 @@
 jQuery(function ($) {
   let frame = null;
 
-  /*function getWrap(btn) {
-    return btn.closest(".mlx-media");
-  }*/
-
   $(document).on("click", ".mlx-media-pick", function (e) {
     e.preventDefault();
-    const wrap = $(this).closest(".mlx-media"); //getWrap(this);
+    const wrap = $(this).closest(".mlx-media");
     const idField = wrap.find(".mlx-media-id");
     const preview = wrap.find(".mlx-media-preview");
 

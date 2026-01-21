@@ -1,4 +1,9 @@
 <?php
+/* 
+ * Internationalization class
+ * @since 1.0.0
+ * @package Modulux_Chat_Box
+*/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /*final class MLX_Chat_Box_I18n {

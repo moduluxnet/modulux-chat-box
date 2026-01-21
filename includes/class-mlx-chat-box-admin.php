@@ -1,14 +1,21 @@
 <?php
+/* 
+ * Admin class
+ * @since 1.0.0
+ * @package Modulux_Chat_Box
+*/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 final class MLX_Chat_Box_Admin {
-
+	
+	/* Initialize admin */
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'add_menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 	}
 
+	/* Add settings menu */
 	public static function add_menu() {
 		add_options_page(
 			__( 'Modulux Chat Box', 'modulux-chat-box' ),
@@ -19,6 +26,7 @@ final class MLX_Chat_Box_Admin {
 		);
 	}
 
+	/* Enqueue admin scripts */
 	public static function enqueue( $hook ) {
 		if ( 'settings_page_mlx-chat-box' !== $hook ) {
 			return;
@@ -32,6 +40,7 @@ final class MLX_Chat_Box_Admin {
         wp_enqueue_script( 'wp-color-picker' );  
 	}
 
+	/* Render settings page */
 	public static function register_settings() {
 		register_setting(
 			'mlx_chat_box_group',
@@ -53,6 +62,29 @@ final class MLX_Chat_Box_Admin {
 			'mlx-chat-box',
 			'mlx_chat_box_section_main'
 		);
+
+		add_settings_section(
+			'mlx_chat_box_section_display',
+			__( 'Display Rules', 'modulux-chat-box' ),
+			'__return_false',
+			'mlx-chat-box'
+		);
+
+		add_settings_field(
+			'show_post_types',
+			__( 'Show on post types', 'modulux-chat-box' ),
+			array( __CLASS__, 'field_show_post_types' ),
+			'mlx-chat-box',
+			'mlx_chat_box_section_display'
+		);
+
+		add_settings_field(
+			'show_pages',
+			__( 'Show on specific pages', 'modulux-chat-box' ),
+			array( __CLASS__, 'field_show_pages' ),
+			'mlx-chat-box',
+			'mlx_chat_box_section_display'
+		);		
 
 		add_settings_section(
 			'mlx_chat_box_section_launcher',
@@ -162,6 +194,7 @@ final class MLX_Chat_Box_Admin {
 		);
 	}
 
+	/* Sanitize options */
 	public static function sanitize_options( $input ) {
 		$defaults = MLX_Chat_Box::default_options();
 		$input    = is_array( $input ) ? $input : array();
@@ -169,6 +202,18 @@ final class MLX_Chat_Box_Admin {
 		$out = array();
 
 		$out['enabled']            = ! empty( $input['enabled'] ) ? 1 : 0;
+
+		// Post types
+		$out['show_post_types'] = array();
+		if ( ! empty( $input['show_post_types'] ) && is_array( $input['show_post_types'] ) ) {
+			$out['show_post_types'] = array_values( array_filter( array_map( 'sanitize_key', $input['show_post_types'] ) ) );
+		}
+
+		// Pages
+		$out['show_pages'] = array();
+		if ( ! empty( $input['show_pages'] ) && is_array( $input['show_pages'] ) ) {
+			$out['show_pages'] = array_values( array_filter( array_map( 'absint', $input['show_pages'] ) ) );
+		}
 
 		$out['launcher_icon_type'] = in_array( $input['launcher_icon_type'] ?? '', array( 'dashicon', 'image' ), true ) ? $input['launcher_icon_type'] : $defaults['launcher_icon_type'];
 		$out['launcher_dashicon']  = sanitize_text_field( $input['launcher_dashicon'] ?? $defaults['launcher_dashicon'] );
@@ -231,10 +276,12 @@ final class MLX_Chat_Box_Admin {
 		return wp_parse_args( $out, $defaults );
 	}
 
+	/* Get options */
 	private static function opts() {
 		return MLX_Chat_Box::get_options();
 	}
 
+	/* Enabled field */
 	public static function field_enabled() {
 		$opts = self::opts();
 		?>
@@ -245,40 +292,73 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
+	/* Display rules fields */
+	public static function field_show_post_types() {
+		$opts = self::opts();
+		$key  = MLX_Chat_Box::OPTION_KEY;
+
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+
+		?>
+		<p class="description">
+			<?php esc_html_e( 'Leave empty to show on all post types. Select one or more to limit visibility.', 'modulux-chat-box' ); ?>
+		</p>
+
+		<div class="mlx-checklist">
+			<?php foreach ( $post_types as $pt => $obj ) : ?>
+				<label style="display:block; margin:4px 0;">
+					<input type="checkbox"
+						name="<?php echo esc_attr( $key ); ?>[show_post_types][]"
+						value="<?php echo esc_attr( $pt ); ?>"
+						<?php checked( in_array( $pt, (array) $opts['show_post_types'], true ) ); ?> />
+					<?php echo esc_html( $obj->labels->singular_name ); ?>
+					<code><?php echo esc_html( $pt ); ?></code>
+				</label>
+			<?php endforeach; ?>
+		</div>
+		<?php
+	}
+
+	/* Pages field */
+	public static function field_show_pages() {
+		$opts = self::opts();
+		$key  = MLX_Chat_Box::OPTION_KEY;
+
+		$pages = get_posts( array(
+			'post_type'      => 'page',
+			'post_status'    => 'publish',
+			'posts_per_page' => 2000,
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+		) );
+
+		$selected = array_map( 'absint', (array) $opts['show_pages'] );
+		?>
+		<p class="description">
+			<?php esc_html_e( 'Leave empty to show on all pages. Select one or more to limit visibility.', 'modulux-chat-box' ); ?>
+		</p>
+
+		<select multiple size="10" style="width: 420px; max-width: 100%;"
+			name="<?php echo esc_attr( $key ); ?>[show_pages][]">
+			<option value=""><?php esc_html_e( '--All--', 'modulux-chat-box' ); ?></option>
+			<?php foreach ( $pages as $p ) : ?>
+				<option value="<?php echo esc_attr( (string) $p->ID ); ?>" <?php selected( in_array( (int) $p->ID, $selected, true ) ); ?>>
+					<?php
+					/* translators: The %d placeholder will be replaced with the post ID number */
+					echo esc_html( $p->post_title ? $p->post_title : sprintf( __( '(no title) #%d', 'modulux-chat-box' ), $p->ID ) );
+					?>
+				</option>
+			<?php endforeach; ?>
+		</select>
+		<?php
+	}
+
+	/* Launcher field */
 	public static function field_launcher() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
 		$image_url = $opts['launcher_image_id'] ? wp_get_attachment_image_url( $opts['launcher_image_id'], 'thumbnail' ) : '';
 		?>
-		<!--<div class="mlx-field">
-			<p>
-				<label>
-					<input type="radio" name="<?php echo esc_attr( $key ); ?>[launcher_icon_type]" value="dashicon" <?php checked( 'dashicon', $opts['launcher_icon_type'] ); ?> />
-					<?php esc_html_e( 'Dashicon class', 'modulux-chat-box' ); ?>
-				</label>
-				&nbsp;&nbsp;
-				<label>
-					<input type="radio" name="<?php echo esc_attr( $key ); ?>[launcher_icon_type]" value="image" <?php checked( 'image', $opts['launcher_icon_type'] ); ?> />
-					<?php esc_html_e( 'Custom image', 'modulux-chat-box' ); ?>
-				</label>
-			</p>
-
-			<p>
-				<input type="text" class="regular-text" name="<?php echo esc_attr( $key ); ?>[launcher_dashicon]" value="<?php echo esc_attr( $opts['launcher_dashicon'] ); ?>" />
-				<span class="description"><?php esc_html_e( 'Example: dashicons-whatsapp, dashicons-format-chat', 'modulux-chat-box' ); ?></span>
-			</p>
-
-			<div class="mlx-media">
-				<input type="hidden" class="mlx-media-id" name="<?php echo esc_attr( $key ); ?>[launcher_image_id]" value="<?php echo esc_attr( (string) $opts['launcher_image_id'] ); ?>" />
-				<button type="button" class="button mlx-media-pick"><?php esc_html_e( 'Select image', 'modulux-chat-box' ); ?></button>
-				<button type="button" class="button mlx-media-clear"><?php esc_html_e( 'Remove', 'modulux-chat-box' ); ?></button>
-				<div class="mlx-media-preview">
-					<?php if ( $image_url ) : ?>
-						<img src="<?php echo esc_url( $image_url ); ?>" alt="" />
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>-->
         <p>
             <label>
                 <input type="radio" name="<?php echo esc_attr( $key ); ?>[launcher_icon_type]" value="dashicon" <?php checked( 'dashicon', $opts['launcher_icon_type'] ); ?> />
@@ -316,24 +396,8 @@ final class MLX_Chat_Box_Admin {
         </div>
 		<?php
 	}
-
-	/*public static function field_position() {
-		$opts = self::opts();
-		$key  = MLX_Chat_Box::OPTION_KEY;
-		?>
-		<p>
-			<select name="<?php echo esc_attr( $key ); ?>[position_mode]">
-				<option value="right" <?php selected( 'right', $opts['position_mode'] ); ?>><?php esc_html_e( 'Right bottom', 'modulux-chat-box' ); ?></option>
-				<option value="left" <?php selected( 'left', $opts['position_mode'] ); ?>><?php esc_html_e( 'Left bottom', 'modulux-chat-box' ); ?></option>
-				<option value="custom" <?php selected( 'custom', $opts['position_mode'] ); ?>><?php esc_html_e( 'Custom CSS', 'modulux-chat-box' ); ?></option>
-			</select>
-		</p>
-		<p>
-			<input type="text" class="regular-text" name="<?php echo esc_attr( $key ); ?>[custom_css_pos]" value="<?php echo esc_attr( $opts['custom_css_pos'] ); ?>" />
-			<span class="description"><?php esc_html_e( 'Only used when Position = Custom. Example: left:10px; bottom:10px;', 'modulux-chat-box' ); ?></span>
-		</p>
-		<?php
-	}*/
+	
+	/* Position field */
     public static function field_position() {
         $opts = self::opts();
         $key  = MLX_Chat_Box::OPTION_KEY;
@@ -368,6 +432,7 @@ final class MLX_Chat_Box_Admin {
         <?php
     }
 
+	/* Launcher style field */
     public static function field_launcher_style() {
         $opts = self::opts();
         $key  = MLX_Chat_Box::OPTION_KEY;
@@ -450,6 +515,7 @@ final class MLX_Chat_Box_Admin {
         <?php
     }
 
+	/* Colors field */
 	public static function field_colors() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
@@ -472,57 +538,41 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
+	/* Contact field */
 	public static function field_contact() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
 		?>
-		<!--<p>
-			<select name="<?php echo esc_attr( $key ); ?>[contact_mode]">
+		<p>
+			<select name="<?php echo esc_attr( $key ); ?>[contact_mode]" id="mlx_contact_mode">
 				<option value="whatsapp" <?php selected( 'whatsapp', $opts['contact_mode'] ); ?>><?php esc_html_e( 'WhatsApp', 'modulux-chat-box' ); ?></option>
 				<option value="custom" <?php selected( 'custom', $opts['contact_mode'] ); ?>><?php esc_html_e( 'Custom URL', 'modulux-chat-box' ); ?></option>
 			</select>
 		</p>
 
-		<p>
-			<label><?php esc_html_e( 'WhatsApp number (country code + number):', 'modulux-chat-box' ); ?></label><br/>
-			<input type="text" class="regular-text" name="<?php echo esc_attr( $key ); ?>[whatsapp_number]" value="<?php echo esc_attr( $opts['whatsapp_number'] ); ?>" />
-			<span class="description"><?php esc_html_e( 'Digits only recommended. Example: 905551112233', 'modulux-chat-box' ); ?></span>
-		</p>
+		<div class="mlx-contact-whatsapp">
+			<p>
+				<label><?php esc_html_e( 'WhatsApp number (country code + number):', 'modulux-chat-box' ); ?></label><br/>
+				<input type="text" class="regular-text"
+					name="<?php echo esc_attr( $key ); ?>[whatsapp_number]"
+					value="<?php echo esc_attr( $opts['whatsapp_number'] ); ?>" />
+				<span class="description"><?php esc_html_e( 'Digits only recommended. Example: 905551112233', 'modulux-chat-box' ); ?></span>
+			</p>
+		</div>
 
-		<p>
-			<label><?php esc_html_e( 'Custom URL:', 'modulux-chat-box' ); ?></label><br/>
-			<input type="url" class="regular-text" name="<?php echo esc_attr( $key ); ?>[custom_url]" value="<?php echo esc_url( $opts['custom_url'] ); ?>" />
-			<span class="description"><?php esc_html_e( 'Used when Contact Mode = Custom URL.', 'modulux-chat-box' ); ?></span>
-		</p>-->
-            <p>
-                <select name="<?php echo esc_attr( $key ); ?>[contact_mode]" id="mlx_contact_mode">
-                    <option value="whatsapp" <?php selected( 'whatsapp', $opts['contact_mode'] ); ?>><?php esc_html_e( 'WhatsApp', 'modulux-chat-box' ); ?></option>
-                    <option value="custom" <?php selected( 'custom', $opts['contact_mode'] ); ?>><?php esc_html_e( 'Custom URL', 'modulux-chat-box' ); ?></option>
-                </select>
-            </p>
-
-            <div class="mlx-contact-whatsapp">
-                <p>
-                    <label><?php esc_html_e( 'WhatsApp number (country code + number):', 'modulux-chat-box' ); ?></label><br/>
-                    <input type="text" class="regular-text"
-                        name="<?php echo esc_attr( $key ); ?>[whatsapp_number]"
-                        value="<?php echo esc_attr( $opts['whatsapp_number'] ); ?>" />
-                    <span class="description"><?php esc_html_e( 'Digits only recommended. Example: 905551112233', 'modulux-chat-box' ); ?></span>
-                </p>
-            </div>
-
-            <div class="mlx-contact-custom">
-                <p>
-                    <label><?php esc_html_e( 'Custom URL:', 'modulux-chat-box' ); ?></label><br/>
-                    <input type="url" class="regular-text"
-                        name="<?php echo esc_attr( $key ); ?>[custom_url]"
-                        value="<?php echo esc_url( $opts['custom_url'] ); ?>" />
-                    <span class="description"><?php esc_html_e( 'Used when Contact Mode = Custom URL.', 'modulux-chat-box' ); ?></span>
-                </p>
-            </div>
+		<div class="mlx-contact-custom">
+			<p>
+				<label><?php esc_html_e( 'Custom URL:', 'modulux-chat-box' ); ?></label><br/>
+				<input type="url" class="regular-text"
+					name="<?php echo esc_attr( $key ); ?>[custom_url]"
+					value="<?php echo esc_url( $opts['custom_url'] ); ?>" />
+				<span class="description"><?php esc_html_e( 'Used when Contact Mode = Custom URL.', 'modulux-chat-box' ); ?></span>
+			</p>
+		</div>
 		<?php
 	}
 
+	/* Confirm gate field */
     public static function field_confirm_gate() {
         $opts = self::opts();
         $key  = MLX_Chat_Box::OPTION_KEY;
@@ -542,6 +592,7 @@ final class MLX_Chat_Box_Admin {
         <?php
     }
 
+	/* Messages field */
 	public static function field_messages() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
@@ -576,6 +627,7 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
+	/* Trigger selector field */
     public static function field_trigger_selector() {
         $opts = self::opts();
         $key  = MLX_Chat_Box::OPTION_KEY;
@@ -590,8 +642,9 @@ final class MLX_Chat_Box_Admin {
             <?php esc_html_e( 'Any element matching this selector will open the chat box. Example: .mlx-chat-open or a[data-open-chat="1"]', 'modulux-chat-box' ); ?>
         </p>
         <?php
-    }    
+    }
 
+	/* Hours field */
 	public static function field_hours() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
@@ -644,29 +697,7 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
-	/*public static function render_page() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Modulux Chat Box', 'modulux-chat-box' ); ?></h1>
-
-			<p class="description">
-				<?php esc_html_e( 'Add Q&As under “Chat Q&As” menu. The launcher shows a searchable list; if no answer, user can contact via WhatsApp (or custom URL).', 'modulux-chat-box' ); ?>
-			</p>
-
-			<form method="post" action="options.php">
-				<?php
-					settings_fields( 'mlx_chat_box_group' );
-					do_settings_sections( 'mlx-chat-box' );
-					submit_button();
-				?>
-			</form>
-		</div>
-		<?php
-	}*/
-
+	/* Render admin page */
     public static function render_page() {
         if ( ! current_user_can( 'manage_options' ) ) {
             return;
@@ -707,6 +738,7 @@ final class MLX_Chat_Box_Admin {
         <?php
     }
 
+	/* Tabs */
     private static function get_tabs() {
         return array(
             'settings' => __( 'Settings', 'modulux-chat-box' ),
@@ -715,6 +747,7 @@ final class MLX_Chat_Box_Admin {
         );
     }
 
+	/* Current tab */
     private static function get_current_tab() {
         // Tab switching is view-only (no state change). Nonce not required.
         $tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'settings'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -722,6 +755,7 @@ final class MLX_Chat_Box_Admin {
         return isset( $tabs[ $tab ] ) ? $tab : 'settings';
     }
 
+	/* Render tabs navigation */
     private static function render_tabs_nav( $current_tab ) {
         $tabs = self::get_tabs();
         $base_url = admin_url( 'options-general.php?page=mlx-chat-box' );
@@ -743,6 +777,7 @@ final class MLX_Chat_Box_Admin {
         echo '</h2>';
     }
 
+	/* Render help tab */
     private static function render_help_tab() {
         ?>
         <div class="mlx-tab-help">
@@ -779,6 +814,7 @@ final class MLX_Chat_Box_Admin {
         <?php
     }
 
+	/* Render about tab */
     private static function render_about_tab() {
         ?>
         <div class="mlx-tab-about">

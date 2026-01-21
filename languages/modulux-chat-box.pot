@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modulux Chat Box\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 23:31+0300\n"
+"POT-Creation-Date: 2026-01-21 21:56+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: https://modulux.net\n"
@@ -18,439 +18,457 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/class-mlx-chat-box-admin.php:14
-#: includes/class-mlx-chat-box-admin.php:15
-#: includes/class-mlx-chat-box-admin.php:678
+#: includes/class-mlx-chat-box-admin.php:21
+#: includes/class-mlx-chat-box-admin.php:22
+#: includes/class-mlx-chat-box-admin.php:706
 msgid "Modulux Chat Box"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:44
+#: includes/class-mlx-chat-box-admin.php:53
 msgid "General"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:51
+#: includes/class-mlx-chat-box-admin.php:60
 msgid "Enable chat box"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:59
+#: includes/class-mlx-chat-box-admin.php:68
+msgid "Display Rules"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:75
+msgid "Show on post types"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:83
+msgid "Show on specific pages"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:91
 msgid "Launcher & Position"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:66
+#: includes/class-mlx-chat-box-admin.php:98
 msgid "Launcher styling"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:74
+#: includes/class-mlx-chat-box-admin.php:106
 msgid "Launcher icon"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:82
+#: includes/class-mlx-chat-box-admin.php:114
 msgid "Position"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:90
+#: includes/class-mlx-chat-box-admin.php:122
 msgid "Colors"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:97
+#: includes/class-mlx-chat-box-admin.php:129
 msgid "Color settings"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:105
+#: includes/class-mlx-chat-box-admin.php:137
 msgid "Contact / Redirect"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:112
+#: includes/class-mlx-chat-box-admin.php:144
 msgid "Contact settings"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:120
+#: includes/class-mlx-chat-box-admin.php:152
 msgid "Contact confirmation"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:128
+#: includes/class-mlx-chat-box-admin.php:160
 msgid "Texts & Templates"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:135
+#: includes/class-mlx-chat-box-admin.php:167
 msgid "UI texts"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:143
+#: includes/class-mlx-chat-box-admin.php:175
 msgid "Open triggers (CSS selector)"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:151
+#: includes/class-mlx-chat-box-admin.php:183
 msgid "Working Hours"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:158
+#: includes/class-mlx-chat-box-admin.php:190
 msgid "Schedule"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:243
+#: includes/class-mlx-chat-box-admin.php:290
 msgid "Show the launcher button and chat panel on the frontend."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:257
-#: includes/class-mlx-chat-box-admin.php:285
-msgid "Dashicon class"
+#: includes/class-mlx-chat-box-admin.php:304
+msgid "Leave empty to show on all post types. Select one or more to limit visibility."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:262
-#: includes/class-mlx-chat-box-admin.php:290
-msgid "Custom image"
-msgstr ""
-
-#: includes/class-mlx-chat-box-admin.php:268
-#: includes/class-mlx-chat-box-admin.php:299
-msgid "Example: dashicons-whatsapp, dashicons-format-chat"
-msgstr ""
-
-#: includes/class-mlx-chat-box-admin.php:273
-#: includes/class-mlx-chat-box-admin.php:308
-msgid "Select image"
-msgstr ""
-
-#: includes/class-mlx-chat-box-admin.php:274
-#: includes/class-mlx-chat-box-admin.php:309
-msgid "Remove"
+#: includes/class-mlx-chat-box-admin.php:338
+msgid "Leave empty to show on all pages. Select one or more to limit visibility."
 msgstr ""
 
 #: includes/class-mlx-chat-box-admin.php:343
-msgid "Right bottom"
+msgid "--All--"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:344
-msgid "Left bottom"
+#: includes/class-mlx-chat-box-admin.php:346
+#, php-format
+msgid "(no title) #%d"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:345
-msgid "Custom CSS"
+#: includes/class-mlx-chat-box-admin.php:362
+msgid "Dashicon class"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:351
-msgid "Desktop position CSS:"
+#: includes/class-mlx-chat-box-admin.php:367
+msgid "Custom image"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:355
-#: includes/class-mlx-chat-box-admin.php:365
-msgid "Only used when Position = Custom. Example: left:10px; bottom:10px;"
+#: includes/class-mlx-chat-box-admin.php:376
+msgid "Example: dashicons-whatsapp, dashicons-format-chat"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:361
-msgid "Mobile position CSS:"
-msgstr ""
-
-#: includes/class-mlx-chat-box-admin.php:377
-msgid "Size (px)"
+#: includes/class-mlx-chat-box-admin.php:385
+msgid "Select image"
 msgstr ""
 
 #: includes/class-mlx-chat-box-admin.php:386
-#: includes/class-mlx-chat-box-admin.php:400
-msgid "Width x Height (e.g., 60x60)"
+msgid "Remove"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:391
-msgid "Size for mobile devices (px)"
+#: includes/class-mlx-chat-box-admin.php:404
+msgid "Right bottom"
 msgstr ""
 
 #: includes/class-mlx-chat-box-admin.php:405
-msgid "Icon color"
+msgid "Left bottom"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:414
-msgid "Background color"
+#: includes/class-mlx-chat-box-admin.php:406
+msgid "Custom CSS"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:423
-msgid "Border width (px)"
+#: includes/class-mlx-chat-box-admin.php:412
+msgid "Desktop position CSS:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:432
-msgid "Border color"
+#: includes/class-mlx-chat-box-admin.php:416
+#: includes/class-mlx-chat-box-admin.php:426
+msgid "Only used when Position = Custom. Example: left:10px; bottom:10px;"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:441
-msgid "Border radius (px)"
+#: includes/class-mlx-chat-box-admin.php:422
+msgid "Mobile position CSS:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:446
-msgid "Tip: 999 makes it fully rounded."
+#: includes/class-mlx-chat-box-admin.php:439
+msgid "Size (px)"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:459
-msgid "Primary"
+#: includes/class-mlx-chat-box-admin.php:448
+#: includes/class-mlx-chat-box-admin.php:462
+msgid "Width x Height (e.g., 60x60)"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:463
-msgid "Text"
+#: includes/class-mlx-chat-box-admin.php:453
+msgid "Size for mobile devices (px)"
 msgstr ""
 
 #: includes/class-mlx-chat-box-admin.php:467
+msgid "Icon color"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:476
+msgid "Background color"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:485
+msgid "Border width (px)"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:494
+msgid "Border color"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:503
+msgid "Border radius (px)"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:508
+msgid "Tip: 999 makes it fully rounded."
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:522
+msgid "Primary"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:526
+msgid "Text"
+msgstr ""
+
+#: includes/class-mlx-chat-box-admin.php:530
 msgid "Panel background"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:471
+#: includes/class-mlx-chat-box-admin.php:534
 msgid "Tip: You can use any valid hex color (#RRGGBB)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:481
-#: includes/class-mlx-chat-box-admin.php:499
+#: includes/class-mlx-chat-box-admin.php:545
 msgid "WhatsApp"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:482
-#: includes/class-mlx-chat-box-admin.php:500
+#: includes/class-mlx-chat-box-admin.php:546
 msgid "Custom URL"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:487
-#: includes/class-mlx-chat-box-admin.php:506
+#: includes/class-mlx-chat-box-admin.php:552
 msgid "WhatsApp number (country code + number):"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:489
-#: includes/class-mlx-chat-box-admin.php:510
+#: includes/class-mlx-chat-box-admin.php:556
 msgid "Digits only recommended. Example: 905551112233"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:493
-#: includes/class-mlx-chat-box-admin.php:516
+#: includes/class-mlx-chat-box-admin.php:562
 msgid "Custom URL:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:495
-#: includes/class-mlx-chat-box-admin.php:520
+#: includes/class-mlx-chat-box-admin.php:566
 msgid "Used when Contact Mode = Custom URL."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:533
+#: includes/class-mlx-chat-box-admin.php:580
 msgid "Require a confirmation checkbox before enabling the contact button."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:537
+#: includes/class-mlx-chat-box-admin.php:584
 msgid "Checkbox label:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:550
+#: includes/class-mlx-chat-box-admin.php:598
 msgid "Header title:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:555
+#: includes/class-mlx-chat-box-admin.php:603
 msgid "Search placeholder:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:560
+#: includes/class-mlx-chat-box-admin.php:608
 msgid "Offline message:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:565
+#: includes/class-mlx-chat-box-admin.php:613
 msgid "Contact button label:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:570
+#: includes/class-mlx-chat-box-admin.php:618
 msgid "Product page message template:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:573
+#: includes/class-mlx-chat-box-admin.php:621
 msgid "Placeholders: {product_title} {sku} {url}"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:590
+#: includes/class-mlx-chat-box-admin.php:639
 msgid "Any element matching this selector will open the chat box. Example: .mlx-chat-open or a[data-open-chat=\"1\"]"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:600
+#: includes/class-mlx-chat-box-admin.php:650
 msgid "Monday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:601
+#: includes/class-mlx-chat-box-admin.php:651
 msgid "Tuesday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:602
+#: includes/class-mlx-chat-box-admin.php:652
 msgid "Wednesday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:603
+#: includes/class-mlx-chat-box-admin.php:653
 msgid "Thursday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:604
+#: includes/class-mlx-chat-box-admin.php:654
 msgid "Friday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:605
+#: includes/class-mlx-chat-box-admin.php:655
 msgid "Saturday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:606
+#: includes/class-mlx-chat-box-admin.php:656
 msgid "Sunday"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:612
+#: includes/class-mlx-chat-box-admin.php:662
 msgid "Enable working hours limitation (outside hours shows Offline message and disables contact)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:619
+#: includes/class-mlx-chat-box-admin.php:669
 msgid "Day"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:620
+#: includes/class-mlx-chat-box-admin.php:670
 msgid "Enabled"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:621
+#: includes/class-mlx-chat-box-admin.php:671
 msgid "Start"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:622
+#: includes/class-mlx-chat-box-admin.php:672
 msgid "End"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:685
+#: includes/class-mlx-chat-box-admin.php:713
 msgid "Add Q&As under “Chat Q&As”. Users can search and optionally contact you via WhatsApp or a custom URL."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:712
+#: includes/class-mlx-chat-box-admin.php:741
 msgid "Settings"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:713
+#: includes/class-mlx-chat-box-admin.php:742
 msgid "Help"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:714
+#: includes/class-mlx-chat-box-admin.php:743
 msgid "About"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:749
+#: includes/class-mlx-chat-box-admin.php:781
 msgid "How it works"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:751
+#: includes/class-mlx-chat-box-admin.php:783
 msgid "Create items in “Chat Q&As” (Title = Question, Content = Answer)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:752
+#: includes/class-mlx-chat-box-admin.php:784
 msgid "The floating button opens a searchable panel."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:753
+#: includes/class-mlx-chat-box-admin.php:785
 msgid "If the visitor still needs help, they can click Contact (WhatsApp or Custom URL)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:756
+#: includes/class-mlx-chat-box-admin.php:788
 msgid "Open triggers"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:758
+#: includes/class-mlx-chat-box-admin.php:790
 msgid "If you set “Open triggers (CSS selector)”, clicking any matching element will open the chat panel."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:762
+#: includes/class-mlx-chat-box-admin.php:794
 msgid "Example button:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:766
+#: includes/class-mlx-chat-box-admin.php:798
 msgid "Product message placeholders"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:773
+#: includes/class-mlx-chat-box-admin.php:805
 msgid "Multilingual (WPML / Polylang)"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:775
+#: includes/class-mlx-chat-box-admin.php:807
 msgid "Translate Q&As using your translation plugin (CPT is supported)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:776
+#: includes/class-mlx-chat-box-admin.php:808
 msgid "Option texts can be translated via WPML admin-texts (wpml-config.xml included) or string translation."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:785
+#: includes/class-mlx-chat-box-admin.php:818
 msgid "About this plugin"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:790
+#: includes/class-mlx-chat-box-admin.php:823
 #, php-format
 msgid "Modulux Chat Box version %s"
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:797
+#: includes/class-mlx-chat-box-admin.php:830
 msgid "Built for WordPress.org quality: Settings API, sanitization, escaping, no bulky code, no ads, no external tracking."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:801
+#: includes/class-mlx-chat-box-admin.php:834
 msgid "Floating Q&A chat box with optional WhatsApp (or custom URL) contact link. Multilingual friendly (Polylang/WPML)."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:805
+#: includes/class-mlx-chat-box-admin.php:838
 msgid "Modulux Chat Box adds a floating launcher button. When opened, users can search through your predefined questions & answers. If they can't find an answer, they can click \"Contact\" to open WhatsApp (or a custom URL). On WooCommerce product pages, the contact link can include a customizable product-aware template."
 msgstr ""
 
-#: includes/class-mlx-chat-box-admin.php:809
+#: includes/class-mlx-chat-box-admin.php:842
 msgid "Website:"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:17
-#: includes/class-mlx-chat-box-cpt.php:27
+#: includes/class-mlx-chat-box-cpt.php:24
+#: includes/class-mlx-chat-box-cpt.php:34
 msgid "Chat Q&As"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:18
+#: includes/class-mlx-chat-box-cpt.php:25
 msgid "Chat Q&A"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:19
+#: includes/class-mlx-chat-box-cpt.php:26
 msgid "Add New"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:20
+#: includes/class-mlx-chat-box-cpt.php:27
 msgid "Add New Q&A"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:21
+#: includes/class-mlx-chat-box-cpt.php:28
 msgid "Edit Q&A"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:22
+#: includes/class-mlx-chat-box-cpt.php:29
 msgid "New Q&A"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:23
+#: includes/class-mlx-chat-box-cpt.php:30
 msgid "View Q&A"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:24
+#: includes/class-mlx-chat-box-cpt.php:31
 msgid "Search Q&As"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:25
+#: includes/class-mlx-chat-box-cpt.php:32
 msgid "No Q&As found"
 msgstr ""
 
-#: includes/class-mlx-chat-box-cpt.php:26
+#: includes/class-mlx-chat-box-cpt.php:33
 msgid "No Q&As found in Trash"
 msgstr ""
 
-#: includes/class-mlx-chat-box.php:93
+#: includes/class-mlx-chat-box.php:106
 msgid "Need help?"
 msgstr ""
 
-#: includes/class-mlx-chat-box.php:94
+#: includes/class-mlx-chat-box.php:107
 msgid "Search…"
 msgstr ""
 
-#: includes/class-mlx-chat-box.php:95
+#: includes/class-mlx-chat-box.php:108
 msgid "We are currently offline. Please contact us during business hours."
 msgstr ""
 
-#: includes/class-mlx-chat-box.php:96
+#: includes/class-mlx-chat-box.php:109
 msgid "Contact us"
 msgstr ""
 
-#: includes/class-mlx-chat-box.php:99
+#: includes/class-mlx-chat-box.php:112
 msgid "My question/answer is not listed here."
 msgstr ""

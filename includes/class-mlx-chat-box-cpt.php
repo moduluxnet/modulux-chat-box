@@ -1,10 +1,16 @@
 <?php
+/* 
+ * Custom Post Type class
+ * @since 1.0.0
+ * @package Modulux_Chat_Box
+*/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 final class MLX_Chat_Box_CPT {
 
 	const CPT = 'mlx_chat_qa';
 
+	/* Initialize */
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'register' ) );
 
@@ -12,6 +18,7 @@ final class MLX_Chat_Box_CPT {
 		add_filter( 'pll_get_post_types', array( __CLASS__, 'polylang_add_cpt' ), 10, 2 );
 	}
 
+	/* Register CPT */
 	public static function register() {
 		$labels = array(
 			'name'               => __( 'Chat Q&As', 'modulux-chat-box' ),
@@ -44,6 +51,7 @@ final class MLX_Chat_Box_CPT {
 		register_post_type( self::CPT, $args );
 	}
 
+	/* Polylang integration: add CPT to translatable post types */
 	public static function polylang_add_cpt( $post_types, $is_settings ) {
 		if ( $is_settings ) {
 			$post_types[ self::CPT ] = self::CPT;

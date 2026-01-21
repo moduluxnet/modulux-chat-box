@@ -83,7 +83,6 @@ button.mlx-chat-launcher:focus {
 
   display: flex;
   flex-direction: column;
-  /*height: 400px;*/
 
   transition: all 0.3s ease;
 }

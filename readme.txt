@@ -1,6 +1,6 @@
 === Modulux Chat Box ===
 Contributors: modulux
-Tags: chat, whatsapp, faq, support, woocommerce, floating button
+Tags: chat, whatsapp, faq, support, woocommerce
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
@@ -42,6 +42,8 @@ Everything runs locally inside WordPress.
 
 == Features ==
 
+* Control visibility by post type
+* Optionally limit display to specific pages
 * Floating launcher button with full styling control
 * Custom post type for Questions & Answers
 * Searchable Q&A list
@@ -77,6 +79,10 @@ HTML is rendered server-side and enhanced with JavaScript only where needed.
 4. Add your questions under "Chat Q&As"
 
 == Frequently Asked Questions ==
+
+= Can I control where the chat box appears? =
+Yes. You can limit the chat box to specific post types and/or specific pages.  
+If no restrictions are set, the chat box appears everywhere by default.
 
 = Does this plugin track visitors? =
 No. Modulux Chat Box does not track users, store personal data, or send data to external services.

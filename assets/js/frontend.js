@@ -139,13 +139,6 @@
 
     let isOpen = false;
 
-    /*function setOpen(next) {
-      isOpen = next;
-      panel.hidden = !isOpen;
-      launcher.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      if (isOpen) search && search.focus();
-    }*/
-
     function setContactEnabled(enabled) {
       if (enabled) {
         contact.classList.remove("is-disabled");
@@ -219,15 +212,6 @@
 
     refreshContactState();
 
-    /*function setOpen(next) {
-      isOpen = next;
-      panel.hidden = !isOpen;
-
-      if (overlay) overlay.hidden = !isOpen;
-
-      launcher.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      if (isOpen) search && search.focus();
-    }*/
     function setOpen(next) {
       isOpen = next;
       panel.hidden = !isOpen;
@@ -314,7 +298,6 @@
     renderList(data.qas || []);
 
     // online/offline behavior
-    //const online = !!data.isOnline;
     if (!online) {
       offline.hidden = false;
       contact.classList.add("is-disabled");
