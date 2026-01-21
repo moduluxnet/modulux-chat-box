@@ -66,7 +66,7 @@ jQuery(function ($) {
 
   function togglePositionFields() {
     const mode = $("#mlx_position_mode").val();
-    $(".mlx-position-custom").toggle(mode === "custom");
+    $(".mlx-position-custom,.mlx-position-custom-mobile").toggle(mode === "custom");
   }
 
   togglePositionFields();

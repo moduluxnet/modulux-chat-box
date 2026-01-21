@@ -24,6 +24,9 @@ button.mlx-chat-launcher:hover,
 button.mlx-chat-launcher:focus {
   width: var(--mlx-launcher-size-width);
   height: var(--mlx-launcher-size-height);
+
+  margin: 0;
+
   border-radius: var(--mlx-launcher-br);
   border-style: solid;
   border-width: var(--mlx-launcher-bw);
@@ -39,6 +42,15 @@ button.mlx-chat-launcher:focus {
   box-shadow: 0 10px 30px rgba(0,0,0,.18);
 
   transition: all 0.2s ease;
+}
+
+@media (max-width: 480px) {
+  button.mlx-chat-launcher,
+  button.mlx-chat-launcher:hover,
+  button.mlx-chat-launcher:focus {
+    width: var(--mlx-launcher-size-width-mobile);
+    height: var(--mlx-launcher-size-height-mobile);
+  }
 }
 
 button.mlx-chat-launcher:hover,
@@ -207,4 +219,25 @@ button.mlx-chat-q:focus {
 #mlx-chat-box-root .mlx-chat-panel {
   position: relative;
   z-index: 1;
+}
+
+/* Confirm checkbox */
+.mlx-chat-confirm {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px dashed rgba(0,0,0,.18);
+  background: rgba(0,0,0,.03);
+  font-size: 13px;
+}
+
+.mlx-chat-confirm-label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.mlx-chat-confirm-check {
+  margin-top: 2px;
 }

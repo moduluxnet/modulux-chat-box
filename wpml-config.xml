@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <wpml-config>
+
   <custom-types>
     <custom-type translate="1">mlx_chat_qa</custom-type>
   </custom-types>
@@ -11,6 +12,8 @@
       <key name="offline_message" />
       <key name="contact_label" />
       <key name="product_template" />
+      <key name="confirm_text" />
     </key>
   </admin-texts>
+
 </wpml-config>

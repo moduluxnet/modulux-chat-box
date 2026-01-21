@@ -17,6 +17,11 @@ final class MLX_Chat_Box_Frontend {
         wp_enqueue_style( 'mlx-chat-box-frontend', MLX_CHAT_BOX_URL . 'assets/css/frontend.css', array(), MLX_CHAT_BOX_VERSION );
 		wp_enqueue_script( 'mlx-chat-box-frontend', MLX_CHAT_BOX_URL . 'assets/js/frontend.js', array(), MLX_CHAT_BOX_VERSION, true );
 
+        // Load dashicons if used as launcher icon.
+        if ( 'dashicon' === $opts['launcher_icon_type'] ) {
+            wp_enqueue_style( 'dashicons' );
+        }        
+
 		$data = array(
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ), // reserved for future (optional)
 			'nonce'             => wp_create_nonce( 'mlx_chat_box' ),
@@ -24,12 +29,15 @@ final class MLX_Chat_Box_Frontend {
 				'search'   => $opts['search_placeholder'],
 				'offline'  => $opts['offline_message'],
 				'contact'  => $opts['contact_label'],
-				'header'   => $opts['header_title'],
+                'header'   => $opts['header_title'],
+                'confirm' => $opts['confirm_text'],
 			),
+            'requireConfirm'    => ! empty( $opts['require_confirm'] ),                
 			'isOnline'          => self::is_online_now(),
 			'contactUrl'        => self::get_contact_url(),
 			'positionMode'      => $opts['position_mode'],
 			'customPos'         => $opts['custom_css_pos'],
+			'customPosMobile'   => $opts['custom_css_pos_mobile'],
 			'colors'            => array(
 				'primary' => $opts['primary_color'],
 				'text'    => $opts['text_color'],
@@ -46,6 +54,8 @@ final class MLX_Chat_Box_Frontend {
             'launcherStyle' => array(
                 'width'        => (int) $opts['launcher_size_width'],
                 'height'       => (int) $opts['launcher_size_height'],
+                'width_mobile' => (int) $opts['launcher_size_width_mobile'],
+                'height_mobile'=> (int) $opts['launcher_size_height_mobile'],                
                 'iconColor'    => $opts['launcher_icon_color'],
                 'bgColor'      => $opts['launcher_bg_color'],
                 'borderWidth'  => (int) $opts['launcher_border_width'],

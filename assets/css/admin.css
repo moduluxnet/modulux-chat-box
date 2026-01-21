@@ -34,3 +34,7 @@
 .mlx-launcher-dashicon, .mlx-launcher-image {
   margin-top: 8px;
 }
+
+/* Help Tab */
+.mlx-tab-help code, .mlx-tab-help pre { font-size: 12px; }
+.mlx-tab-help pre { background: #f6f7f7; padding: 10px; border-radius: 6px; overflow:auto; }

@@ -115,6 +115,14 @@ final class MLX_Chat_Box_Admin {
 			'mlx_chat_box_section_contact'
 		);
 
+        add_settings_field(
+            'confirm_gate',
+            __( 'Contact confirmation', 'modulux-chat-box' ),
+            array( __CLASS__, 'field_confirm_gate' ),
+            'mlx-chat-box',
+            'mlx_chat_box_section_messages'
+        );
+
 		add_settings_section(
 			'mlx_chat_box_section_messages',
 			__( 'Texts & Templates', 'modulux-chat-box' ),
@@ -168,9 +176,12 @@ final class MLX_Chat_Box_Admin {
 
 		$out['position_mode']      = in_array( $input['position_mode'] ?? '', array( 'right', 'left', 'custom' ), true ) ? $input['position_mode'] : $defaults['position_mode'];
 		$out['custom_css_pos']     = sanitize_text_field( $input['custom_css_pos'] ?? $defaults['custom_css_pos'] );
+		$out['custom_css_pos_mobile'] = sanitize_text_field( $input['custom_css_pos_mobile'] ?? $defaults['custom_css_pos_mobile'] );
 
         $out['launcher_size_width']     = sanitize_text_field( $input['launcher_size_width'] ?? $defaults['launcher_size_width'] );
         $out['launcher_size_height']    = sanitize_text_field( $input['launcher_size_height'] ?? $defaults['launcher_size_height'] );
+        $out['launcher_size_width_mobile']     = sanitize_text_field( $input['launcher_size_width_mobile'] ?? $defaults['launcher_size_width_mobile'] );
+        $out['launcher_size_height_mobile']    = sanitize_text_field( $input['launcher_size_height_mobile'] ?? $defaults['launcher_size_height_mobile'] );        
         $out['launcher_icon_color']    = sanitize_hex_color( $input['launcher_icon_color'] ?? $defaults['launcher_icon_color'] );
         $out['launcher_bg_color']      = sanitize_hex_color( $input['launcher_bg_color'] ?? $defaults['launcher_bg_color'] );
         $out['launcher_border_width']  = isset( $input['launcher_border_width'] ) ? absint( $input['launcher_border_width'] ) : (int) $defaults['launcher_border_width'];
@@ -189,6 +200,9 @@ final class MLX_Chat_Box_Admin {
 		$out['search_placeholder'] = sanitize_text_field( $input['search_placeholder'] ?? $defaults['search_placeholder'] );
 		$out['offline_message']    = sanitize_text_field( $input['offline_message'] ?? $defaults['offline_message'] );
 		$out['contact_label']      = sanitize_text_field( $input['contact_label'] ?? $defaults['contact_label'] );
+
+        $out['require_confirm'] = ! empty( $input['require_confirm'] ) ? 1 : 0;
+        $out['confirm_text']    = sanitize_text_field( $input['confirm_text'] ?? $defaults['confirm_text'] );
 
 		$out['product_template']   = wp_kses_post( $input['product_template'] ?? $defaults['product_template'] );
 
@@ -334,12 +348,23 @@ final class MLX_Chat_Box_Admin {
 
         <div class="mlx-position-custom">
             <p>
+                <label><?php esc_html_e( 'Desktop position CSS:', 'modulux-chat-box' ); ?></label><br/>
                 <input type="text" class="regular-text"
                     name="<?php echo esc_attr( $key ); ?>[custom_css_pos]"
                     value="<?php echo esc_attr( $opts['custom_css_pos'] ); ?>" />
                 <span class="description"><?php esc_html_e( 'Only used when Position = Custom. Example: left:10px; bottom:10px;', 'modulux-chat-box' ); ?></span>
             </p>
         </div>
+
+        <div class="mlx-position-custom-mobile">
+            <p>
+                <label><?php esc_html_e( 'Mobile position CSS:', 'modulux-chat-box' ); ?></label><br/>
+                <input type="text" class="regular-text"
+                    name="<?php echo esc_attr( $key ); ?>[custom_css_pos_mobile]"
+                    value="<?php echo esc_attr( $opts['custom_css_pos_mobile'] ); ?>" />
+                <span class="description"><?php esc_html_e( 'Only used when Position = Custom. Example: left:10px; bottom:10px;', 'modulux-chat-box' ); ?></span>
+            </p>
+        </div>        
         <?php
     }
 
@@ -361,6 +386,20 @@ final class MLX_Chat_Box_Admin {
                     <span class="description"><?php esc_html_e( 'Width x Height (e.g., 60x60)', 'modulux-chat-box' ); ?></span>
                 </td>
             </tr>
+
+            <tr>
+                <th><?php esc_html_e( 'Size for mobile devices (px)', 'modulux-chat-box' ); ?></th>
+                <td>
+                    <input type="number" style="width: 60px;"
+                        name="<?php echo esc_attr( $key ); ?>[launcher_size_width_mobile]"
+                        value="<?php echo esc_attr( $opts['launcher_size_width_mobile'] ); ?>" />
+                        x
+                    <input type="number" style="width: 60px;"
+                        name="<?php echo esc_attr( $key ); ?>[launcher_size_height_mobile]"
+                        value="<?php echo esc_attr( $opts['launcher_size_height_mobile'] ); ?>" />
+                    <span class="description"><?php esc_html_e( 'Width x Height (e.g., 60x60)', 'modulux-chat-box' ); ?></span>
+                </td>
+            </tr>            
 
             <tr>
                 <th><?php esc_html_e( 'Icon color', 'modulux-chat-box' ); ?></th>
@@ -484,6 +523,25 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
+    public static function field_confirm_gate() {
+        $opts = self::opts();
+        $key  = MLX_Chat_Box::OPTION_KEY;
+        ?>
+        <p>
+            <label>
+                <input type="checkbox" name="<?php echo esc_attr( $key ); ?>[require_confirm]" value="1" <?php checked( 1, (int) $opts['require_confirm'] ); ?> />
+                <?php esc_html_e( 'Require a confirmation checkbox before enabling the contact button.', 'modulux-chat-box' ); ?>
+            </label>
+        </p>
+        <p>
+            <label><?php esc_html_e( 'Checkbox label:', 'modulux-chat-box' ); ?></label><br/>
+            <input type="text" class="regular-text"
+                name="<?php echo esc_attr( $key ); ?>[confirm_text]"
+                value="<?php echo esc_attr( $opts['confirm_text'] ); ?>" />
+        </p>
+        <?php
+    }
+
 	public static function field_messages() {
 		$opts = self::opts();
 		$key  = MLX_Chat_Box::OPTION_KEY;
@@ -586,7 +644,7 @@ final class MLX_Chat_Box_Admin {
 		<?php
 	}
 
-	public static function render_page() {
+	/*public static function render_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -607,5 +665,153 @@ final class MLX_Chat_Box_Admin {
 			</form>
 		</div>
 		<?php
-	}
+	}*/
+
+    public static function render_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        $current_tab = self::get_current_tab();
+        ?>
+        <div class="wrap">
+            <h1><?php esc_html_e( 'Modulux Chat Box', 'modulux-chat-box' ); ?></h1>
+
+            <?php self::render_tabs_nav( $current_tab ); ?>
+
+            <?php if ( 'settings' === $current_tab ) : ?>
+
+                <p class="description">
+                    <?php esc_html_e( 'Add Q&As under “Chat Q&As”. Users can search and optionally contact you via WhatsApp or a custom URL.', 'modulux-chat-box' ); ?>
+                </p>
+
+                <form method="post" action="options.php">
+                    <?php
+                        settings_fields( 'mlx_chat_box_group' );
+                        do_settings_sections( 'mlx-chat-box' );
+                        submit_button();
+                    ?>
+                </form>
+
+            <?php elseif ( 'help' === $current_tab ) : ?>
+
+                <?php self::render_help_tab(); ?>
+
+            <?php elseif ( 'about' === $current_tab ) : ?>
+
+                <?php self::render_about_tab(); ?>
+
+            <?php endif; ?>
+
+        </div>
+        <?php
+    }
+
+    private static function get_tabs() {
+        return array(
+            'settings' => __( 'Settings', 'modulux-chat-box' ),
+            'help'     => __( 'Help', 'modulux-chat-box' ),
+            'about'    => __( 'About', 'modulux-chat-box' ),
+        );
+    }
+
+    private static function get_current_tab() {
+        // Tab switching is view-only (no state change). Nonce not required.
+        $tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'settings'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tabs = self::get_tabs();
+        return isset( $tabs[ $tab ] ) ? $tab : 'settings';
+    }
+
+    private static function render_tabs_nav( $current_tab ) {
+        $tabs = self::get_tabs();
+        $base_url = admin_url( 'options-general.php?page=mlx-chat-box' );
+
+        echo '<h2 class="nav-tab-wrapper">';
+
+        foreach ( $tabs as $tab_key => $label ) {
+            $url = add_query_arg( 'tab', $tab_key, $base_url );
+            $classes = 'nav-tab' . ( $current_tab === $tab_key ? ' nav-tab-active' : '' );
+
+            printf(
+                '<a href="%1$s" class="%2$s">%3$s</a>',
+                esc_url( $url ),
+                esc_attr( $classes ),
+                esc_html( $label )
+            );
+        }
+
+        echo '</h2>';
+    }
+
+    private static function render_help_tab() {
+        ?>
+        <div class="mlx-tab-help">
+            <h2><?php esc_html_e( 'How it works', 'modulux-chat-box' ); ?></h2>
+            <ul>
+                <li><?php esc_html_e( 'Create items in “Chat Q&As” (Title = Question, Content = Answer).', 'modulux-chat-box' ); ?></li>
+                <li><?php esc_html_e( 'The floating button opens a searchable panel.', 'modulux-chat-box' ); ?></li>
+                <li><?php esc_html_e( 'If the visitor still needs help, they can click Contact (WhatsApp or Custom URL).', 'modulux-chat-box' ); ?></li>
+            </ul>
+
+            <h2><?php esc_html_e( 'Open triggers', 'modulux-chat-box' ); ?></h2>
+            <p>
+                <?php esc_html_e( 'If you set “Open triggers (CSS selector)”, clicking any matching element will open the chat panel.', 'modulux-chat-box' ); ?>
+            </p>
+            <p>
+                <code>.mlx-chat-open</code>
+                &nbsp;<?php esc_html_e( 'Example button:', 'modulux-chat-box' ); ?>
+            </p>
+            <pre><code>&lt;button class="mlx-chat-open"&gt;Need help?&lt;/button&gt;</code></pre>
+
+            <h2><?php esc_html_e( 'Product message placeholders', 'modulux-chat-box' ); ?></h2>
+            <ul>
+                <li><code>{product_title}</code></li>
+                <li><code>{sku}</code></li>
+                <li><code>{url}</code></li>
+            </ul>
+
+            <h2><?php esc_html_e( 'Multilingual (WPML / Polylang)', 'modulux-chat-box' ); ?></h2>
+            <ul>
+                <li><?php esc_html_e( 'Translate Q&As using your translation plugin (CPT is supported).', 'modulux-chat-box' ); ?></li>
+                <li><?php esc_html_e( 'Option texts can be translated via WPML admin-texts (wpml-config.xml included) or string translation.', 'modulux-chat-box' ); ?></li>
+            </ul>
+        </div>
+        <?php
+    }
+
+    private static function render_about_tab() {
+        ?>
+        <div class="mlx-tab-about">
+            <h2><?php esc_html_e( 'About this plugin', 'modulux-chat-box' ); ?></h2>
+            <p>
+                <?php
+                printf(
+                    /* translators: %s: plugin version */
+                    esc_html__( 'Modulux Chat Box version %s', 'modulux-chat-box' ),
+                    esc_html( MLX_CHAT_BOX_VERSION )
+                );
+                ?>
+            </p>
+
+            <p>
+                <?php esc_html_e( 'Built for WordPress.org quality: Settings API, sanitization, escaping, no bulky code, no ads, no external tracking.', 'modulux-chat-box' ); ?>
+            </p>
+
+            <p>
+                <?php esc_html_e( 'Floating Q&A chat box with optional WhatsApp (or custom URL) contact link. Multilingual friendly (Polylang/WPML).', 'modulux-chat-box' ); ?>
+            </p>
+
+            <p>
+                <?php esc_html_e( 'Modulux Chat Box adds a floating launcher button. When opened, users can search through your predefined questions & answers. If they can\'t find an answer, they can click "Contact" to open WhatsApp (or a custom URL). On WooCommerce product pages, the contact link can include a customizable product-aware template.', 'modulux-chat-box' ); ?>
+            </p>
+
+            <p>
+                <strong><?php esc_html_e( 'Website:', 'modulux-chat-box' ); ?></strong>
+                <a href="<?php echo esc_url( 'https://modulux.net' ); ?>" target="_blank" rel="noopener noreferrer">modulux.net</a>
+            </p>
+        </div>
+        <?php
+    }
+
+
 }

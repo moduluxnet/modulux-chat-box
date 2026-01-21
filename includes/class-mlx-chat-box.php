@@ -62,11 +62,14 @@ final class MLX_Chat_Box {
 
 			// Positioning
 			'position_mode'      => 'right', // right|left|custom
-			'custom_css_pos'     => 'right: 20px; bottom: 20px;',
+			'custom_css_pos'     => 'right: 30px; bottom: 30px;',
+			'custom_css_pos_mobile' => 'right: 20px; bottom: 60px;',
 
             // Launcher styling
             'launcher_size_width'     => '56',
             'launcher_size_height'    => '56',
+            'launcher_size_width_mobile'  => '32',
+            'launcher_size_height_mobile' => '32',
             'launcher_icon_color'   => '#ffffff',
             'launcher_bg_color'     => '#25D366',
             'launcher_border_width' => 0,        // px
@@ -91,6 +94,9 @@ final class MLX_Chat_Box {
 			'search_placeholder' => __( 'Search…', 'modulux-chat-box' ),
 			'offline_message'    => __( 'We are currently offline. Please contact us during business hours.', 'modulux-chat-box' ),
 			'contact_label'      => __( 'Contact us', 'modulux-chat-box' ),
+
+            'require_confirm' => 1,
+            'confirm_text'    => __( 'My question/answer is not listed here.', 'modulux-chat-box' ),
 
 			'product_template'   => 'Hi, I am writing for {product_title} {sku}. Can you please help? {url}',
 
